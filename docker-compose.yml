@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: venus_hotel
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - venus-network
+
+  # Strapi Backend
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: venus_hotel
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi_password
+      DATABASE_SSL: false
+      NODE_ENV: production
+      PORT: 1337
+      APP_KEYS: your-app-keys-here
+      API_TOKEN_SALT: your-api-token-salt-here
+      ADMIN_JWT_SECRET: your-admin-jwt-secret-here
+      JWT_SECRET: your-jwt-secret-here
+    ports:
+      - "1337:1337"
+    depends_on:
+      - postgres
+    networks:
+      - venus-network
+    volumes:
+      - ./backend/public/uploads:/opt/app/public/uploads
+
+  # React Frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - venus-network
+
+volumes:
+  postgres_data:
+
+networks:
+  venus-network:
+    driver: bridge
