@@ -15,16 +15,21 @@ venus-deployment/
 ## 🚀 Deployment Scripts
 
 ### Frontend Deployment
+
 ```bash
-./scripts/deploy-firebase.sh
+# From venus-frontend directory
+./scripts/deploy-frontend.sh
 ```
 
 ### Backend Deployment
+
 ```bash
-./scripts/deploy-strapi-railway.md  # Instructions
+# From venus-backend directory
+./scripts/deploy-backend.sh
 ```
 
 ### Testing
+
 ```bash
 node scripts/test-endpoints.js
 ```
@@ -45,6 +50,7 @@ docker-compose up
 ```
 
 Services:
+
 - **Frontend:** http://localhost:80
 - **Backend:** http://localhost:1337
 - **Database:** PostgreSQL on port 5432
@@ -60,16 +66,18 @@ Historical migration data and scripts are stored in `archive/` directory.
 
 ## 🛠️ Scripts Overview
 
-| Script | Description |
-|--------|-------------|
-| `deploy-firebase.sh` | Deploy frontend to Firebase |
-| `deploy-gcp.sh` | Deploy to Google Cloud Platform |
-| `fix-api-urls.sh` | Fix API URLs in config |
-| `generate-keys.sh` | Generate security keys |
-| `prepare-railway-deploy.sh` | Prepare Railway deployment |
-| `migrate-to-railway.js` | Migrate data to Railway |
-| `migrate-simple.js` | Simple data migration |
-| `test-endpoints.js` | Test API endpoints |
+| Script                      | Description                     |
+| --------------------------- | ------------------------------- |
+| `deploy-frontend.sh`        | Deploy frontend to Firebase     |
+| `deploy-backend.sh`         | Deploy backend to Railway       |
+| `deploy-firebase.sh`        | Legacy Firebase deployment      |
+| `deploy-gcp.sh`             | Deploy to Google Cloud Platform |
+| `fix-api-urls.sh`           | Fix API URLs in config          |
+| `generate-keys.sh`          | Generate security keys          |
+| `prepare-railway-deploy.sh` | Prepare Railway deployment      |
+| `migrate-to-railway.js`     | Migrate data to Railway         |
+| `migrate-simple.js`         | Simple data migration           |
+| `test-endpoints.js`         | Test API endpoints              |
 
 ## ⚙️ Environment Setup
 
@@ -89,18 +97,21 @@ Before running scripts, ensure you have:
 ## 📝 Usage Examples
 
 ### Deploy Frontend
+
 ```bash
-cd scripts
-./deploy-firebase.sh
+cd ../venus-frontend
+./scripts/deploy-frontend.sh
 ```
 
 ### Test All Endpoints
+
 ```bash
 cd scripts
 node test-endpoints.js
 ```
 
 ### Local Development
+
 ```bash
 docker-compose up -d
 # Frontend: http://localhost:80

@@ -15,6 +15,7 @@ const endpoints = [
   { name: "Galleries", path: "/api/galleries" },
   { name: "Contact Pages", path: "/api/contact-pages" },
   { name: "Pages", path: "/api/pages" },
+  { name: "Special Offers", path: "/api/special-offers" },
 ];
 
 async function testEndpoint(endpoint) {

@@ -1,12 +1,11 @@
 #!/bin/bash
 
-# Venus Hotel & SPA - Firebase Deployment Script
-# Author: AI Assistant
-# Date: $(date)
+# Venus Hotel & SPA - Frontend Deployment Script
+# Deploys frontend from venus-frontend repository to Firebase
 
 set -e
 
-echo "🔥 Venus Hotel & SPA - Firebase Deployment"
+echo "🚀 Venus Hotel & SPA - Frontend Deployment"
 echo "=========================================="
 
 # Colors for output
@@ -33,6 +32,12 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# Check if we're in the right directory
+if [ ! -f "package.json" ]; then
+    print_error "package.json not found. Please run this script from the venus-frontend directory."
+    exit 1
+fi
+
 # Check if Firebase CLI is installed
 if ! command -v firebase &> /dev/null; then
     print_error "Firebase CLI is not installed. Please install it first:"
@@ -47,18 +52,23 @@ if ! firebase projects:list &> /dev/null; then
     exit 1
 fi
 
-print_status "Starting deployment process..."
+print_status "Starting frontend deployment process..."
 
-# Step 1: Build frontend
+# Step 1: Install dependencies
+print_status "Installing dependencies..."
+npm install
+print_success "Dependencies installed"
+
+# Step 2: Build frontend
 print_status "Building frontend..."
 npm run build
 print_success "Frontend built successfully"
 
-# Step 2: Deploy to Firebase
+# Step 3: Deploy to Firebase
 print_status "Deploying to Firebase..."
 firebase deploy --only hosting
 
-print_success "🎉 Deployment completed successfully!"
+print_success "🎉 Frontend deployment completed successfully!"
 echo ""
 echo "🌐 Your app is now live at:"
 echo "   https://venus-hotel-spa.web.app"
@@ -71,5 +81,5 @@ echo "   https://venus-strapi-backend-production.up.railway.app"
 echo ""
 print_warning "Remember to:"
 echo "   1. Ensure backend is running on Railway"
-echo "   2. Configure custom domain (optional)"
-echo "   3. Set up SSL certificate (automatic with Firebase)" 
+echo "   2. Test all pages and functionality"
+echo "   3. Configure custom domain (optional)"
